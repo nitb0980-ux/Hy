@@ -25,12 +25,14 @@ jobs:
           # Dhyaan dein: Upar wale URL mein aap '1.20.4' aur build number change kar sakte hain.
 
       # Playit.gg Setup (Secret key wahi hai jo aapke pehle screenshot mein thi)
-      - name: Setup Playit.gg
+            - name: Setup Playit.gg
         run: |
           curl -Lo playit https://github.com/playit-cloud/playit-agent/releases/latest/download/playit-linux-amd64
           chmod +x playit
-          ./playit --secret 75aea16a41af9c64e0ee3ab1effa0c89df76c4fc804e9d1bcbaa343ce5c4bd1c run &
+          # Naye version mein 'run' ki jagah seedhe secret key deni hoti hai
+          ./playit --secret 75aea16a41af9c64e0ee3ab1effa0c89df76c4fc804e9d1bcbaa343ce5c4bd1c &
           sleep 10
+
 
       - name: Start Minecraft Server
         run: |
