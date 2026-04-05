@@ -1,10 +1,10 @@
-name: Minecraft Server Auto-Setup
+name: Minecraft Server on GitHub
 
 on:
-  workflow_dispatch: # Isse aap manually 'Run workflow' button daba kar start kar sakte hain
+  workflow_dispatch: # Actions tab se manually start karne ke liye
 
 jobs:
-  run-server:
+  run-mc-server:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
@@ -14,24 +14,24 @@ jobs:
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
-          java-version: '17' # Minecraft 1.18+ ke liye 17 best hai
+          java-version: '17'
 
-      - name: Download PaperMC server.jar
+      - name: Download Server and Playit
         run: |
-          echo "eula=true" > eula.txt # Automatic EULA accept karega
-          # Yeh command latest PaperMC 1.20.4 download karegi
+          # Server file download (1.20.4 Paper)
           curl -o server.jar https://api.papermc.io/v2/projects/paper/versions/1.20.4/builds/497/downloads/paper-1.20.4-497.jar
-
-      - name: Setup Playit.gg
-        run: |
-          curl -Lo playit https://github.com/playit-cloud/playit-agent/releases/latest/download/playit-linux-amd64
+          echo "eula=true" > eula.txt
+          
+          # Playit.gg Stable Version (GitHub ke liye best)
+          curl -Lo playit https://github.com/playit-cloud/playit-agent/releases/download/v0.15.13/playit-linux-amd64
           chmod +x playit
-          # Fixed command: 'run' keyword hata diya hai naye version ke liye
-          ./playit --secret a957c685d0089336a3d3ecdac4351652d7a1790f33cf0cd8800264a3e3ed27eb &
-          sleep 15 # Wait karega connection establish hone tak
+
+      - name: Run Playit Agent
+        run: |
+          # Apni secret key ke saath background mein run karein
+          ./playit --secret e58dd831126be724b46bc310df370deee0c517a18a49364837e8e51e5d24de53 run &
+          sleep 20
 
       - name: Start Minecraft Server
         run: |
-          # 7GB RAM ke saath server start hoga
           java -Xmx7G -Xms7G -jar server.jar nogui
-          
