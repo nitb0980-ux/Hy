@@ -27,7 +27,7 @@ jobs:
           curl -Lo playit https://github.com/playit-cloud/playit-agent/releases/latest/download/playit-linux-amd64
           chmod +x playit
           # Fixed command: 'run' keyword hata diya hai naye version ke liye
-          ./playit --secret 7b0a30b03850d6b0a84b08b2b53309511cf886ea3ab4e25e3f677aa0a63f7dad &
+          ./playit --secret a957c685d0089336a3d3ecdac4351652d7a1790f33cf0cd8800264a3e3ed27eb &
           sleep 15 # Wait karega connection establish hone tak
 
       - name: Start Minecraft Server
